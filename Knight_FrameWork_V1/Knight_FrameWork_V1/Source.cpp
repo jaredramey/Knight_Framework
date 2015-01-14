@@ -55,7 +55,7 @@ int main()
 	testTriangle->SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
 	testTriangle->SetPosition(2,(1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
 
-	testTriangle->SetColor(1.0f, 1.0f, 1.0f, 0.0f);
+	testTriangle->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	testTriangle->SetUVs(0, 0.0f, 1.0f);
 	testTriangle->SetUVs(1, 0.0f, 0.0f);
@@ -71,6 +71,7 @@ int main()
 	testTriangle->SetTexture(6, "frame-7.png", width, heigth, bpp);
 	testTriangle->SetTexture(7, "frame-8.png", width, heigth, bpp);
 
+
 	//setting up test Quad
 	testQuad[0].SetPosition(0, (1024 / 2.0 - 100.0f), (720 / 2.0));
 	testQuad[1].SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
@@ -81,6 +82,9 @@ int main()
 	testQuad[1].SetUVs(1, 0.0f, 0.0f);
 	testQuad[2].SetUVs(2, 1.0f, 0.0f);
 	testQuad[3].SetUVs(3, 1.0f, 1.0f);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//temporary place to create the buffers
 	//create ID for a vertex buffer object
@@ -171,8 +175,8 @@ int main()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		timer += 1;
-		if (timer == 34)
+		timer += 3;
+		if (timer >= 34)
 		{
 			timer = 0;
 		}

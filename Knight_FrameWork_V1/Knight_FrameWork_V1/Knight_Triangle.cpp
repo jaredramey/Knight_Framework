@@ -79,33 +79,36 @@ void Knight_Triangle::SetTexture(int frame, const char* textureName, int width, 
 
 void Knight_Triangle::Update()
 {
-	/*if (GetAsyncKeyState(0x57))
+	for (int i = 0; i < 3; i++)
 	{
-		fPositions[1] += 10.0f;
-		isMoving = true;
-	}
+		if (GetAsyncKeyState(0x57))
+		{
+			points[i].fPositions[1] += 10.0f;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x53))
-	{
-		fPositions[1] -= 10.0f;
-		isMoving = true;
-	}
+		if (GetAsyncKeyState(0x53))
+		{
+			points[i].fPositions[1] -= 10.0f;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x41))
-	{
-		fPositions[0] -= 10.0f;
-		isMoving = true;
-	}
+		if (GetAsyncKeyState(0x41))
+		{
+			points[i].fPositions[1] -= 10.0f;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x44))
-	{
-		fPositions[0] += 10.0f;
-		isMoving = true;
+		if (GetAsyncKeyState(0x44))
+		{
+			points[i].fPositions[1] += 10.0f;
+			isMoving = true;
+		}
+		else
+		{
+			isMoving = false;
+		}
 	}
-	else
-	{
-		isMoving = false;
-	}*/
 }
 
 void Knight_Triangle::Draw(float timer)
