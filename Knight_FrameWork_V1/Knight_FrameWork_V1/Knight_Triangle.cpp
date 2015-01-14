@@ -10,26 +10,36 @@ Knight_Triangle::~Knight_Triangle()
 {
 }
 
-void Knight_Triangle::SetPosition(float x, float y)
+void Knight_Triangle::SetPosition(int point, float x, float y)
 {
-	fPositions[0] = x;
-	fPositions[1] = y;
-	fPositions[2] = 0.0f;
-	fPositions[3] = 1.0f;
+	if (point < 3 && point > -1)
+	{
+		points[point].fPositions[0] = x;
+		points[point].fPositions[1] = y;
+		points[point].fPositions[2] = 0.0f;
+		points[point].fPositions[3] = 1.0f;
+	}
+	
 }
 
 void Knight_Triangle::SetColor(float R, float G, float B, float Op)
 {
-	fColours[0] = R;
-	fColours[1] = G;
-	fColours[2] = B;
-	fColours[3] = Op;
+	for (int i = 0; i < 3; i++)
+	{
+		points[i].fColours[0] = R;
+		points[i].fColours[1] = G;
+		points[i].fColours[2] = B;
+		points[i].fColours[3] = Op;
+	}
 }
 
-void Knight_Triangle::SetUVs(float U, float V)
+void Knight_Triangle::SetUVs(int point, float U, float V)
 {
-	fUVs[0] = U;
-	fUVs[1] = V;
+	if (point < 3 && point > -1)
+	{
+		points[point].fUVs[0] = U;
+		points[point].fUVs[1] = V;
+	}
 }
 
 unsigned int Knight_Triangle::loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
@@ -64,11 +74,12 @@ unsigned int Knight_Triangle::loadTexture(const char* a_pFileName, int & a_iWidt
 void Knight_Triangle::SetTexture(int frame, const char* textureName, int width, int height, int bpp)
 {
 	TextureFrames[frame] = loadTexture(textureName, width, height, bpp);
+	
 }
 
 void Knight_Triangle::Update()
 {
-	if (GetAsyncKeyState(0x57))
+	/*if (GetAsyncKeyState(0x57))
 	{
 		fPositions[1] += 10.0f;
 		isMoving = true;
@@ -94,7 +105,7 @@ void Knight_Triangle::Update()
 	else
 	{
 		isMoving = false;
-	}
+	}*/
 }
 
 void Knight_Triangle::Draw(float timer)
@@ -104,7 +115,7 @@ void Knight_Triangle::Draw(float timer)
 	{
 		if (TextureFrames[0] != NULL)
 		{
-			glBindTexture(GL_TEXTURE_2D, TextureFrames[0]);
+			glBindTexture(GL_TEXTURE_2D ,TextureFrames[0]);
 		}
 
 		else

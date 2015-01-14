@@ -11,28 +11,35 @@
 #include <iostream>
 #include <Windows.h>
 
+struct PointQuad
+{
+	float fPositions[4];
+	float fColours[4];
+	float fUVs[2];
+};
+
 class Knight_Quad
 {
 private:
 	//Quad variables
-	float fPositions[4];
-	float fColours[4];
-	float fUVs[3];
 
 	GLuint TextureFrames[9];
 
 	bool isMoving = false;
 
 public:
-	//Default constructors
+	//Default Constructors
 	Knight_Quad();
 	~Knight_Quad();
-	//Custom constructors
-	//Knight_Quad(/*Figure out what's needed and add it here*/);
+	//Custom constructor
+	//Knight_Triangle(/*Figure out whats needed to be added and put it here*/);
 
-	void SetPosition(float x, float y);
+	PointQuad points[3];
+
+	//Custom Functions
+	void SetPosition(int point, float x, float y);
 	void SetColor(float R, float G, float B, float Op);
-	void SetUVs(float U, float V);
+	void SetUVs(int point, float U, float V);
 	unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
 	//can set up to 10 frames (0-9)
 	void SetTexture(int frame, const char* textureName, int width, int height, int bpp);
@@ -40,5 +47,6 @@ public:
 	void Update();
 	//set timer to zero by default. Goes up to 39 (0-39) so reset your clock after that
 	void Draw(float timer);
+
 };
 

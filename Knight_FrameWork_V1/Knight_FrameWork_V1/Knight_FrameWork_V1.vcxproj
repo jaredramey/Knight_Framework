@@ -95,14 +95,15 @@
     <ClInclude Include="Knight_Triangle.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-1.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-2.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-3.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-4.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-5.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-6.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-7.png" />
-    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-8.png" />
+    <Image Include="frame-1.png" />
+    <Image Include="frame-2.png" />
+    <Image Include="frame-3.png" />
+    <Image Include="frame-4.png" />
+    <Image Include="frame-5.png" />
+    <Image Include="frame-6.png" />
+    <Image Include="frame-7.png" />
+    <Image Include="frame-8.png" />
+    <Image Include="myTexture.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
