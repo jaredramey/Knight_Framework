@@ -81,12 +81,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Knight_Quad.cpp" />
+    <ClCompile Include="Knight_Triangle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlatFragmentShader.glsl" />
     <None Include="TexturedFragmentShader.glsl" />
     <None Include="VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Knight_Quad.h" />
+    <ClInclude Include="Knight_Triangle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-1.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-2.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-3.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-4.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-5.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-6.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-7.png" />
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-8.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

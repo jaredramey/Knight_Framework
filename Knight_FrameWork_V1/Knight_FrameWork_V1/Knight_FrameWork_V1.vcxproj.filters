@@ -18,6 +18,12 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Knight_Triangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight_Quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlatFragmentShader.glsl">
@@ -29,5 +35,39 @@
     <None Include="VertexShader.glsl">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Knight_Triangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight_Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Blue Bird Sprite Sheets\Transparent PNG\frame-8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

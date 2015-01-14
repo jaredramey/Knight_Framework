@@ -9,12 +9,18 @@
 #include <fstream>
 #include <iostream>
 //custom headers/libraries
+#include "Knight_Quad.h"
+#include "Knight_Triangle.h"
 
 //function prototypes
 GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
 GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
-unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
+//unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
+
+//Place to test classes
+Knight_Triangle* testTriangle = new Knight_Triangle[3];
+Knight_Quad* testQuad = new Knight_Quad[4];
 
 int main()
 {
@@ -26,7 +32,7 @@ int main()
 
 	//create a windowed mode window and it's OpenGL context
 	GLFWwindow* window;
-	window = glfwCreateWindow(1024, 720, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1024, 720, "Knight_FrameWork_v1", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -48,13 +54,149 @@ int main()
 	//set up the mapping of the screen to pixel co-ordinates
 	float *orthographicProjection = getOrtho(0, 1080, 0, 720, 0, 180);
 
+	//Setting up the player to test the triangle
+	testTriangle[0].SetPosition((1024 / 2.0), (720 / 2.0 + 100));
+	testTriangle[1].SetPosition((1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
+	testTriangle[2].SetPosition((1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
+
+	testTriangle[0].SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+	testTriangle[1].SetColor(0.0f, 1.0f, 0.0f, 1.0f);
+	testTriangle[2].SetColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+	//setting up test Quad
+	testQuad[0].SetPosition((1024 / 2.0 - 100.0f), (720 / 2.0));
+	testQuad[1].SetPosition((1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
+	testQuad[2].SetPosition((1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
+	testQuad[3].SetPosition((1024 / 2.0 + 100.0f), (720 / 2.0));
+
+	testQuad[0].SetUVs(0.0f, 1.0f);
+	testQuad[1].SetUVs(0.0f, 0.0f);
+	testQuad[2].SetUVs(1.0f, 0.0f);
+	testQuad[3].SetUVs(1.0f, 1.0f);
+
+	//temporary place to create the buffers
+	//create ID for a vertex buffer object
+	GLuint uiVBO;
+	glGenBuffers(1, &uiVBO);
+
+	//check it succeeded
+	if (uiVBO != 0)
+	{
+		//bind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+		//allocate space for vertices on the graphics card
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Knight_Triangle) * 4, NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//copy data to graphics card
+		memcpy(vBuffer, testTriangle, sizeof(Knight_Triangle) * 4);
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	GLuint uiVBOTwo;
+	glGenBuffers(1, &uiVBOTwo);
+
+	//check it succeeded
+	if (uiVBOTwo != 0)
+	{
+		//bind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBOTwo);
+		//allocate space for vertices on the graphics card
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Knight_Quad)* 4, NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//copy data to graphics card
+		memcpy(vBuffer, testTriangle, sizeof(Knight_Quad)* 4);
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	//create ID for an index buffer object
+	GLuint uiIBO;
+	glGenBuffers(1, &uiIBO);
+
+	if (uiIBO != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our verticies
+		//In this case, they are in sequintial order
+		for (int i = 0; i < 4; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	//create ID for an index buffer object
+	GLuint uiIBOTwo;
+	glGenBuffers(1, &uiIBOTwo);
+
+	if (uiIBOTwo != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBOTwo);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our verticies
+		//In this case, they are in sequintial order
+		for (int i = 0; i < 4; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	//create shader program
+	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
+
+	//find the position of the matrix var in the shader so we can send info there later
+	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		system("CLS");
+
+		//send orthographic projection info to shader
+		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+
+		//glUseProgram(uiProgramFlat);
+		glUseProgram(uiProgramFlat);
 
 		//Main loop code goes here
+
+		//enable the vertex array states
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(3);
+		glEnableVertexAttribArray(4);
+
+
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Knight_Triangle), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Knight_Triangle), (void*)(sizeof(float)* 4));
+
+		glDrawElements(GL_TRIANGLES, 4, GL_UNSIGNED_BYTE, NULL);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 
 
 		//swap front and back buffers
@@ -65,7 +207,9 @@ int main()
 	}
 
 	//Code for deleting any buffers
-
+	//delete the index buffer to free up allocated memory
+	glDeleteBuffers(1, &uiIBO);
+	glDeleteBuffers(1, &uiIBOTwo);
 
 	glfwTerminate();
 	return 0;
@@ -185,7 +329,7 @@ float* getOrtho(float left, float right, float bottom, float top, float a_fNear,
 	return toReturn;
 }
 
-unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
+/*unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
 {
 	unsigned int uiTextureID = 0;
 	//check if the file exists
@@ -211,4 +355,4 @@ unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeigh
 		}
 		return uiTextureID;
 	}
-}
+}*/
