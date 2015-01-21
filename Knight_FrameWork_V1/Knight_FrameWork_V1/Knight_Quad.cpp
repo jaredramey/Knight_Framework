@@ -12,7 +12,7 @@ Knight_Quad::~Knight_Quad()
 
 void Knight_Quad::SetPosition(int point, float x, float y)
 {
-	if (point < 3 && point > -1)
+	if (point < 4 && point > -1)
 	{
 		points[point].fPositions[0] = x;
 		points[point].fPositions[1] = y;
@@ -24,7 +24,7 @@ void Knight_Quad::SetPosition(int point, float x, float y)
 
 void Knight_Quad::SetColor(float R, float G, float B, float Op)
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		points[i].fColours[0] = R;
 		points[i].fColours[1] = G;
@@ -35,7 +35,7 @@ void Knight_Quad::SetColor(float R, float G, float B, float Op)
 
 void Knight_Quad::SetUVs(int point, float U, float V)
 {
-	if (point < 3 && point > -1)
+	if (point < 4 && point > -1)
 	{
 		points[point].fUVs[0] = U;
 		points[point].fUVs[1] = V;
