@@ -33,6 +33,8 @@ public:
 	~Knight_Triangle();
 	//Custom constructor
 	//Knight_Triangle(/*Figure out whats needed to be added and put it here*/);
+	
+	bool isLoaded = false;
 
 	Point points[3];
 

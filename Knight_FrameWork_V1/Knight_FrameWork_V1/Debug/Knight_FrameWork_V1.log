@@ -1,9 +1,9 @@
-﻿Build started 1/20/2015 10:35:59 AM.
+﻿Build started 1/26/2015 9:26:36 AM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\Knight_FrameWork_V1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW" /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Knight_Quad.cpp
-         Knight_Quad.cpp
-     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\knight_quad.cpp(71): warning C4715: 'Knight_Quad::loadTexture' : not all control paths return a value
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW" /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Knight_Triangle.cpp
+         Knight_Triangle.cpp
+     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\knight_triangle.cpp(71): warning C4715: 'Knight_Triangle::loadTexture' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\soil\Simple OpenGL Image Library\projects\VC8\Debug" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32" glfw3.lib opengl32.lib glew32s.lib glew32.lib SOIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.lib" /MACHINE:X86 Debug\Knight_Quad.obj
          Debug\Knight_Triangle.obj
@@ -13,4 +13,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.25
+Time Elapsed 00:00:00.91

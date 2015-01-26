@@ -18,10 +18,6 @@ GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
 //unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
 
-//Place to test classes
-Knight_Triangle* testTriangle = new Knight_Triangle();
-Knight_Quad* testQuad = new Knight_Quad[4];
-
 int main()
 {
 	//Initialise GLFW
@@ -49,6 +45,10 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
+
+	//Place to test classes
+	Knight_Triangle* testTriangle = new Knight_Triangle();
+	Knight_Quad* testQuad = new Knight_Quad[4];
 
 	//Setting up the player to test the triangle
 	testTriangle->SetPosition(0, (1024 / 2.0), (720 / 2.0 + 100));
@@ -88,48 +88,7 @@ int main()
 
 	//temporary place to create the buffers
 	//create ID for a vertex buffer object
-	GLuint uiVBO;
-	glGenBuffers(1, &uiVBO);
-
-	//check it succeeded
-	if (uiVBO != 0)
-	{
-		//bind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-		//allocate space for vertices on the graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * 3, NULL, GL_STATIC_DRAW);
-		//get pointer to allocated space on the graphics card
-		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//copy data to graphics card
-		memcpy(vBuffer, testTriangle->points, sizeof(Point) * 3);
-		//unmap and unbind buffer
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
-
-	//create ID for an index buffer object
-	GLuint uiIBO;
-	glGenBuffers(1, &uiIBO);
-
-	if (uiIBO != 0)
-	{
-		//bind IBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
-		//allocate space for verticies on the graphics card
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
-		//get pointer to allocated space on the graphics card
-		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//specify the order we'd like to draw our verticies
-		//In this case, they are in sequintial order
-		for (int i = 0; i < 3; i++)
-		{
-			((char*)iBuffer)[i] = i;
-		}
-		//unmap and unbind buffer
-		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
+	
 
 	//create shader program
 	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
@@ -156,24 +115,8 @@ int main()
 		glUseProgram(uiProgramTextured);
 
 		//Main loop code goes here
-
-		//enable the vertex array states
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
-
 		testTriangle->Draw(timer);
-
-		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Point), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Point), (void*)(sizeof(float)* 4));
-		//now to worry about the UVs and send that info to the graphics card as well
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Point), (void*)(sizeof(float)* 8));
-
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		
 
 		timer += 3;
 		if (timer >= 34)
@@ -190,7 +133,6 @@ int main()
 
 	//Code for deleting any buffers
 	//delete the index buffer to free up allocated memory
-	glDeleteBuffers(1, &uiIBO);
 
 	glfwTerminate();
 	return 0;
