@@ -3,11 +3,17 @@
 
 Knight_Triangle::Knight_Triangle()
 {
+	
 }
 
 
 Knight_Triangle::~Knight_Triangle()
 {
+}
+
+void Knight_Triangle::InitTriangle()
+{
+	
 }
 
 void Knight_Triangle::SetPosition(int point, float x, float y)
@@ -113,10 +119,23 @@ void Knight_Triangle::Update()
 
 void Knight_Triangle::Draw(float timer)
 {
-	GLuint uiVBO;
-	GLuint uiIBO;
+	//Starting to test VAO's
+	/*
+	GLuint VBO = 0;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Point)*3, NULL, GL_STATIC_DRAW);
+	GLuint VAO = 0;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
+	*/
+	//End of VAO
 
-
+	if (isMoving == false)
+	{
 		glGenBuffers(1, &uiVBO);
 		//check it succeeded
 		if (uiVBO != 0)
@@ -133,31 +152,31 @@ void Knight_Triangle::Draw(float timer)
 			glUnmapBuffer(GL_ARRAY_BUFFER);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
-
-
-
-		//create ID for an index buffer object
-		glGenBuffers(1, &uiIBO);
-
-		if (uiIBO != 0)
-		{
-			//bind IBO
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
-			//allocate space for verticies on the graphics card
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
-			//get pointer to allocated space on the graphics card
-			GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-			//specify the order we'd like to draw our verticies
-			//In this case, they are in sequintial order
-			for (int i = 0; i < 3; i++)
-			{
-				((char*)iBuffer)[i] = i;
-			}
-			//unmap and unbind buffer
-			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		}
 	
+		isMoving = true;
+	}
+
+	//create ID for an index buffer object
+	glGenBuffers(1, &uiIBO);
+
+	if (uiIBO != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our verticies
+		//In this case, they are in sequintial order
+		for (int i = 0; i < 3; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 
 	if (timer == 0 || timer == 1 || timer == 2 || timer == 3)
 	{

@@ -26,6 +26,9 @@ private:
 	GLuint TextureFrames[9];
 
 	bool isMoving = false;
+	GLuint uiVBO;
+	GLuint uiIBO;
+
 
 public:
 	//Default Constructors
@@ -39,6 +42,7 @@ public:
 	Point points[3];
 
 	//Custom Functions
+	void InitTriangle();
 	void SetPosition(int point, float x, float y);
 	void SetColor(float R, float G, float B, float Op);
 	void SetUVs(int point, float U, float V);

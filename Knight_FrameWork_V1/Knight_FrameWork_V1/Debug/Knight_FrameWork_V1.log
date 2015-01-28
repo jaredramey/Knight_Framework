@@ -1,18 +1,19 @@
-﻿Build started 1/26/2015 4:22:58 PM.
+﻿Build started 1/28/2015 12:58:53 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\Knight_FrameWork_V1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW" /I"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
          Source.cpp
-     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(242): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(244): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(246): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(247): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(249): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jared.ramey\documents\github\knight_framework\knight_framework_v1\knight_framework_v1\source.cpp(251): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\soil\Simple OpenGL Image Library\projects\VC8\Debug" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120" /LIBPATH:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32" glfw3.lib opengl32.lib glew32s.lib glew32.lib SOIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.lib" /MACHINE:X86 Debug\Knight_Quad.obj
          Debug\Knight_Triangle.obj
          Debug\Source.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
          Knight_FrameWork_V1.vcxproj -> C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Debug\Knight_FrameWork_V1.exe
      1>Done Building Project "C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\Knight_FrameWork_V1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.40
+Time Elapsed 00:00:01.17

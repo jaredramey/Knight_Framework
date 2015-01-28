@@ -51,6 +51,7 @@ int main()
 	Knight_Quad* testQuad = new Knight_Quad[4];
 
 	//Setting up the player to test the triangle
+	testTriangle->InitTriangle();
 	testTriangle->SetPosition(0, (1024 / 2.0), (720 / 2.0 + 100));
 	testTriangle->SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
 	testTriangle->SetPosition(2,(1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
@@ -119,10 +120,14 @@ int main()
 		
 
 		timer += 3;
+		std::cerr << timer << "\n";
 		if (timer >= 34)
 		{
 			timer = 0;
 		}
+
+		//Switch to default shader as to avoid any issues
+		//glUseProgram(0);
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
