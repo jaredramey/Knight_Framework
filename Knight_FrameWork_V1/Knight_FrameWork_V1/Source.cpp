@@ -3,47 +3,51 @@
 #include <wglew.h>
 #include <glfw3.h>
 #include "SOIL.h"
+#include "glfont.h"
 //default libraries
 #include <vector>
 #include <string>
 #include <fstream>
 #include <iostream>
 //custom headers/libraries
+#include "Global.h"
 #include "Knight_Quad.h"
 #include "Knight_Triangle.h"
 
-//function prototypes
-GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
-GLuint CreateProgram(const char *a_vertex, const char *a_frag);
-float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
-//unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
 
 int main()
 {
-	//Initialise GLFW
-	if (!glfwInit())
-	{
-		return -1;
+	//initialize glew and such
+	Global init;
+	init.Initialize();
+
+	//trying to get glfont working
+	//Initialize OpenGL
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//Initialize the viewport
+	glViewport(0, 0, 1024, 720);
+
+	//Initialize OpenGL projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0f, 1024.0f, 720.0f, 0.0f, -2.0f, 2.0f);
+
+	//Clear back buffer
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//Create font
+	GLuint textureName;
+	glGenTextures(1, &textureName);
+	PixelPerfectGLFont font;
+	try {
+		font.Create("DatFont.glf", textureName);
 	}
-
-	//create a windowed mode window and it's OpenGL context
-	GLFWwindow* window;
-	window = glfwCreateWindow(1024, 720, "Knight_FrameWork_v1", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	//make the window's context current
-	glfwMakeContextCurrent(window);
-
-	//Initialize Glew
-	if (glewInit() != GLEW_OK)
-	{
-		// OpenGL didn't start-up! shutdown GLFW and return an error code
-		glfwTerminate();
-		return -1;
+	catch (GLFontError::InvalidFile) {
+		std::cerr << "Cannot load font\n";
+		abort();
 	}
 
 	//Place to test classes
@@ -89,25 +93,30 @@ int main()
 
 	//temporary place to create the buffers
 	//create ID for a vertex buffer object
-	
-
 	//create shader program
-	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
-	GLuint uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
+	GLuint uiProgramFlat = init.CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
+	GLuint uiProgramTextured = init.CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
 
 	//find the position of the matrix var in the shader so we can send info there later
 	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");
 
 	//set up the mapping of the screen to pixel co-ordinates. Try changing values and see what happens
-	float *orthographicProjection = getOrtho(0, 1080, 0, 720, 0, 180);
+	float *orthographicProjection = init.getOrtho(0, 1080, 0, 720, 0, 180);
 
 	float timer = 0;
 
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(init.window))
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		//glClear(GL_COLOR_BUFFER_BIT);
 		system("CLS");
+		//Draw some stuff
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//send orthographic projection info to shader
 		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
@@ -117,20 +126,33 @@ int main()
 
 		//Main loop code goes here
 		testTriangle->Draw(timer);
-		
 
 		timer += 3;
 		std::cerr << timer << "\n";
-		if (timer >= 34)
+		if (timer >= 30)
 		{
 			timer = 0;
 		}
 
-		//Switch to default shader as to avoid any issues
-		//glUseProgram(0);
+		glUseProgram(0);
+
+
+		try {
+			font.Begin();
+
+			font.TextOutThing("hello my wonderfull world", 400, 200, 0);
+			font.TextOutThing("Test", 50, 50, 0);
+
+		}
+		catch (GLFontError::InvalidFont) {
+			std::cerr << "Trying to draw with an uninitialized font\n";
+			abort();
+		}
+
+		glDisable(GL_TEXTURE_2D);
 
 		//swap front and back buffers
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(init.window);
 
 		//poll for and process events
 		glfwPollEvents();
@@ -138,149 +160,8 @@ int main()
 
 	//Code for deleting any buffers
 	//delete the index buffer to free up allocated memory
+	glLoadIdentity();
 
 	glfwTerminate();
 	return 0;
 }
-
-//functions fleshed out
-GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile)
-{
-	std::string strShaderCode;
-	//open shader file
-	std::ifstream shaderStream(a_strShaderFile);
-	//if that worked ok, load file line by line
-	if (shaderStream.is_open())
-	{
-		std::string Line = "";
-		while (std::getline(shaderStream, Line))
-		{
-			strShaderCode += "\n" + Line;
-		}
-		shaderStream.close();
-	}
-
-	//convert to cstring
-	char const *szShaderSourcePointer = strShaderCode.c_str();
-
-	//create shader ID
-	GLuint uiShader = glCreateShader(a_eShaderType);
-	//load source code
-	glShaderSource(uiShader, 1, &szShaderSourcePointer, NULL);
-
-	//compile shader
-	glCompileShader(uiShader);
-
-	//check for compilation errors and output them
-	GLint iStatus;
-	glGetShaderiv(uiShader, GL_COMPILE_STATUS, &iStatus);
-	if (iStatus == GL_FALSE)
-	{
-		GLint infoLogLength;
-		glGetShaderiv(uiShader, GL_INFO_LOG_LENGTH, &infoLogLength);
-
-		GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-		glGetShaderInfoLog(uiShader, infoLogLength, NULL, strInfoLog);
-
-		const char *strShaderType = NULL;
-		switch (a_eShaderType)
-		{
-		case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-		case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
-		}
-
-		fprintf(stderr, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
-		delete[] strInfoLog;
-	}
-
-	return uiShader;
-}
-
-GLuint CreateProgram(const char *a_vertex, const char *a_frag)
-{
-	std::vector<GLuint> shaderList;
-
-	shaderList.push_back(CreateShader(GL_VERTEX_SHADER, a_vertex));
-	shaderList.push_back(CreateShader(GL_FRAGMENT_SHADER, a_frag));
-
-	//create shader program ID
-	GLuint uiProgram = glCreateProgram();
-
-	//attach shaders
-	for (auto shader = shaderList.begin(); shader != shaderList.end(); shader++)
-		glAttachShader(uiProgram, *shader);
-
-	//link program
-	glLinkProgram(uiProgram);
-
-	//check for link errors and output them
-	GLint status;
-	glGetProgramiv(uiProgram, GL_LINK_STATUS, &status);
-	if (status == GL_FALSE)
-	{
-		GLint infoLogLength;
-		glGetProgramiv(uiProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
-
-		GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-		glGetProgramInfoLog(uiProgram, infoLogLength, NULL, strInfoLog);
-		fprintf(stderr, "Linker failure: %s\n", strInfoLog);
-		delete[] strInfoLog;
-	}
-
-	for (auto shader = shaderList.begin(); shader != shaderList.end(); shader++)
-	{
-		glDetachShader(uiProgram, *shader);
-		glDeleteShader(*shader);
-	}
-
-	return uiProgram;
-}
-
-float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar)
-{
-	//to correspond with mat4 in the shader
-	//ideally this function would be part of your matrix class
-	//however I wasn't willing to write your matrix class for you just to show you this
-	//so here we are in array format!
-	//add this to your matrix class as a challenge if you like!
-	float* toReturn = new float[12];
-	toReturn[0] = 2.0 / (right - left);;
-	toReturn[1] = toReturn[2] = toReturn[3] = toReturn[4] = 0;
-	toReturn[5] = 2.0 / (top - bottom);
-	toReturn[6] = toReturn[7] = toReturn[8] = toReturn[9] = 0;
-	toReturn[10] = 2.0 / (a_fFar - a_fNear);
-	toReturn[11] = 0;
-	toReturn[12] = -1 * ((right + left) / (right - left));
-	toReturn[13] = -1 * ((top + bottom) / (top - bottom));
-	toReturn[14] = -1 * ((a_fFar + a_fNear) / (a_fFar - a_fNear));
-	toReturn[15] = 1;
-	return toReturn;
-}
-
-/*unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
-{
-	unsigned int uiTextureID = 0;
-	//check if the file exists
-	if (a_pFileName != nullptr)
-	{
-		//read in image data from file
-		unsigned char* pImageData = SOIL_load_image(a_pFileName, &a_iWidth, &a_iHeight, &a_iBPP, SOIL_LOAD_AUTO);
-
-		//check for a successful read
-		if (pImageData)
-		{
-			//create openGL texture handle
-			uiTextureID = SOIL_create_OGL_texture(pImageData, a_iWidth, a_iHeight, a_iBPP, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-
-			//clear what was read in from file now that it's stored in the handle
-			SOIL_free_image_data(pImageData);
-		}
-
-		//check for errors
-		if (uiTextureID == 0)
-		{
-			std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
-		}
-		return uiTextureID;
-	}
-}*/

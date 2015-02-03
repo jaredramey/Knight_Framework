@@ -41,6 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -51,9 +53,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,16 +83,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\glfont_cpp\glfont.cc" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Knight_Quad.cpp" />
     <ClCompile Include="Knight_Triangle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DatFont.glf" />
     <None Include="FlatFragmentShader.glsl" />
     <None Include="TexturedFragmentShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\glfont_cpp\glfont.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Knight_Quad.h" />
     <ClInclude Include="Knight_Triangle.h" />
   </ItemGroup>

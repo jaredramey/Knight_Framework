@@ -10,6 +10,8 @@
 #include <fstream>
 #include <iostream>
 #include <Windows.h>
+//Custom headers
+#include "Global.h"
 
 struct Point
 {
@@ -29,6 +31,7 @@ private:
 	GLuint uiVBO;
 	GLuint uiIBO;
 
+	Global inits;
 
 public:
 	//Default Constructors

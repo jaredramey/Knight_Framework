@@ -119,20 +119,6 @@ void Knight_Triangle::Update()
 
 void Knight_Triangle::Draw(float timer)
 {
-	//Starting to test VAO's
-	/*
-	GLuint VBO = 0;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Point)*3, NULL, GL_STATIC_DRAW);
-	GLuint VAO = 0;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-	*/
-	//End of VAO
 
 	if (isMoving == false)
 	{
@@ -177,6 +163,7 @@ void Knight_Triangle::Draw(float timer)
 		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
+
 
 	if (timer == 0 || timer == 1 || timer == 2 || timer == 3)
 	{
@@ -282,4 +269,5 @@ void Knight_Triangle::Draw(float timer)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDeleteBuffers(1, &uiIBO);
+	//glUseProgram(0);
 }

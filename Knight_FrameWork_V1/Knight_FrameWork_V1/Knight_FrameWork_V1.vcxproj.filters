@@ -24,6 +24,12 @@
     <ClCompile Include="Knight_Quad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\glfont_cpp\glfont.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlatFragmentShader.glsl">
@@ -35,12 +41,21 @@
     <None Include="VertexShader.glsl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="DatFont.glf">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Knight_Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Knight_Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\glfont_cpp\glfont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
