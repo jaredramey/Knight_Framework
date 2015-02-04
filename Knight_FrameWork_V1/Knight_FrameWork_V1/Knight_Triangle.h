@@ -26,11 +26,7 @@ private:
 	//Triangle variables
 
 	GLuint TextureFrames[9];
-
 	bool isMoving = false;
-	GLuint uiVBO;
-	GLuint uiIBO;
-
 	Global inits;
 
 public:
@@ -41,8 +37,9 @@ public:
 	//Knight_Triangle(/*Figure out whats needed to be added and put it here*/);
 	
 	bool isLoaded = false;
-
 	Point points[3];
+	GLuint uiVBO;
+	GLuint uiIBO;
 
 	//Custom Functions
 	void InitTriangle();

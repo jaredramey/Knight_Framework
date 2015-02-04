@@ -3,7 +3,6 @@
 #include <wglew.h>
 #include <glfw3.h>
 #include "SOIL.h"
-#include "glfont.h"
 //default libraries
 #include <vector>
 #include <string>
@@ -13,6 +12,7 @@
 #include "Global.h"
 #include "Knight_Quad.h"
 #include "Knight_Triangle.h"
+#include "TextHandler.h"
 
 
 int main()
@@ -21,41 +21,15 @@ int main()
 	Global init;
 	init.Initialize();
 
-	//trying to get glfont working
-	//Initialize OpenGL
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	//Initialize the viewport
-	glViewport(0, 0, 1024, 720);
-
-	//Initialize OpenGL projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0f, 1024.0f, 720.0f, 0.0f, -2.0f, 2.0f);
-
-	//Clear back buffer
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	//Create font
-	GLuint textureName;
-	glGenTextures(1, &textureName);
-	PixelPerfectGLFont font;
-	try {
-		font.Create("DatFont.glf", textureName);
-	}
-	catch (GLFontError::InvalidFile) {
-		std::cerr << "Cannot load font\n";
-		abort();
-	}
+	//class for texture handling
+	TextHandler myText;
 
 	//Place to test classes
 	Knight_Triangle* testTriangle = new Knight_Triangle();
-	Knight_Quad* testQuad = new Knight_Quad[4];
+	Knight_Quad* testQuad = new Knight_Quad();
+
 
 	//Setting up the player to test the triangle
-	testTriangle->InitTriangle();
 	testTriangle->SetPosition(0, (1024 / 2.0), (720 / 2.0 + 100));
 	testTriangle->SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
 	testTriangle->SetPosition(2,(1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
@@ -78,15 +52,30 @@ int main()
 
 
 	//setting up test Quad
-	testQuad[0].SetPosition(0, (1024 / 2.0 - 100.0f), (720 / 2.0));
-	testQuad[1].SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
-	testQuad[2].SetPosition(2, (1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
-	testQuad[3].SetPosition(3, (1024 / 2.0 + 100.0f), (720 / 2.0));
+	testQuad->SetPosition(0, (500.0f), (400.0f));
+	testQuad->SetPosition(1, (500.0f), (300.0f));
+	testQuad->SetPosition(2, (400.0f), (300.0f));
+	testQuad->SetPosition(3, (400.0f), (400.0f));
 
-	testQuad[0].SetUVs(0, 0.0f, 1.0f);
-	testQuad[1].SetUVs(1, 0.0f, 0.0f);
-	testQuad[2].SetUVs(2, 1.0f, 0.0f);
-	testQuad[3].SetUVs(3, 1.0f, 1.0f);
+	testQuad->SetColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+	testQuad->SetColor(1, 1.0f, 1.0f, 1.0f, 1.0f);
+	testQuad->SetColor(2, 1.0f, 1.0f, 1.0f, 1.0f);
+	testQuad->SetColor(3, 1.0f, 1.0f, 1.0f, 1.0f);
+
+	testQuad->SetUVs(0, 0.0f, 1.0f);
+	testQuad->SetUVs(1, 0.0f, 0.0f);
+	testQuad->SetUVs(2, 1.0f, 0.0f);
+	testQuad->SetUVs(3, 1.0f, 1.0f);
+
+	int widthS = 50, heigthS = 50, bppS = 4;
+	testQuad->SetTexture(0, "frame-1.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(1, "frame-2.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(2, "frame-3.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(3, "frame-4.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(4, "frame-5.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(5, "frame-6.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(6, "frame-7.png", widthS, heigthS, bppS);
+	testQuad->SetTexture(7, "frame-8.png", widthS, heigthS, bppS);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -98,7 +87,7 @@ int main()
 	GLuint uiProgramTextured = init.CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
 
 	//find the position of the matrix var in the shader so we can send info there later
-	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");
+	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramTextured, "MVP");
 
 	//set up the mapping of the screen to pixel co-ordinates. Try changing values and see what happens
 	float *orthographicProjection = init.getOrtho(0, 1080, 0, 720, 0, 180);
@@ -107,15 +96,7 @@ int main()
 
 	while (!glfwWindowShouldClose(init.window))
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
 		system("CLS");
-		//Draw some stuff
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glEnable(GL_TEXTURE_2D);
-		glColor3f(1.0f, 1.0f, 1.0f);
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//send orthographic projection info to shader
@@ -126,6 +107,7 @@ int main()
 
 		//Main loop code goes here
 		testTriangle->Draw(timer);
+		testQuad->Draw(timer);
 
 		timer += 3;
 		std::cerr << timer << "\n";
@@ -134,22 +116,6 @@ int main()
 			timer = 0;
 		}
 
-		glUseProgram(0);
-
-
-		try {
-			font.Begin();
-
-			font.TextOutThing("hello my wonderfull world", 400, 200, 0);
-			font.TextOutThing("Test", 50, 50, 0);
-
-		}
-		catch (GLFontError::InvalidFont) {
-			std::cerr << "Trying to draw with an uninitialized font\n";
-			abort();
-		}
-
-		glDisable(GL_TEXTURE_2D);
 
 		//swap front and back buffers
 		glfwSwapBuffers(init.window);
@@ -157,7 +123,6 @@ int main()
 		//poll for and process events
 		glfwPollEvents();
 	}
-
 	//Code for deleting any buffers
 	//delete the index buffer to free up allocated memory
 	glLoadIdentity();

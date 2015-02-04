@@ -22,15 +22,14 @@ void Knight_Quad::SetPosition(int point, float x, float y)
 
 }
 
-void Knight_Quad::SetColor(float R, float G, float B, float Op)
+void Knight_Quad::SetColor(int point, float R, float G, float B, float Op)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		points[i].fColours[0] = R;
-		points[i].fColours[1] = G;
-		points[i].fColours[2] = B;
-		points[i].fColours[3] = Op;
-	}
+	
+		points[point].fColours[0] = R;
+		points[point].fColours[1] = G;
+		points[point].fColours[2] = B;
+		points[point].fColours[3] = Op;
+	
 }
 
 void Knight_Quad::SetUVs(int point, float U, float V)
@@ -74,7 +73,6 @@ unsigned int Knight_Quad::loadTexture(const char* a_pFileName, int & a_iWidth, i
 void Knight_Quad::SetTexture(int frame, const char* textureName, int width, int height, int bpp)
 {
 	TextureFrames[frame] = loadTexture(textureName, width, height, bpp);
-
 }
 
 void Knight_Quad::Update()
@@ -110,6 +108,50 @@ void Knight_Quad::Update()
 
 void Knight_Quad::Draw(float timer)
 {
+	if (isMoving == false)
+	{
+		glGenBuffers(1, &uiVBO);
+		//check it succeeded
+		if (uiVBO != 0)
+		{
+			//bind VBO
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+			//allocate space for vertices on the graphics card
+			glBufferData(GL_ARRAY_BUFFER, sizeof(PointQuad)* 4, NULL, GL_STATIC_DRAW);
+			//get pointer to allocated space on the graphics card
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy data to graphics card
+			memcpy(vBuffer, points, sizeof(PointQuad)* 4);
+			//unmap and unbind buffer
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		isMoving = true;
+	}
+
+	//create ID for an index buffer object
+	glGenBuffers(1, &uiIBO);
+
+	if (uiIBO != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our verticies
+		//In this case, they are in sequintial order
+		for (int i = 0; i < 4; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
 
 	if (timer == 0 || timer == 1 || timer == 2 || timer == 3)
 	{
@@ -195,5 +237,24 @@ void Knight_Quad::Draw(float timer)
 		{
 			glBindTexture(GL_TEXTURE_2D, TextureFrames[9]);
 		}
+
 	}
+
+	//enable the vertex array states
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(PointQuad), 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(PointQuad), (void*)(sizeof(float)* 4));
+	//now to worry about the UVs and send that info to the graphics card as well
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(PointQuad), (void*)(sizeof(float)* 8));
+
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDeleteBuffers(1, &uiIBO);
 }

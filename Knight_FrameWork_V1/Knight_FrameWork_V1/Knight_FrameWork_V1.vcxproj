@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;$(SourcePath)</SourcePath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,13 +55,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfont_cpp;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\tinyxml2-master\;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\Knight_FrameWork_V1\soil;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\soil\Simple OpenGL Image Library\projects\VC8\Debug;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;glew32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\tinyxml2-master\tinyxml2\bin\Win32-Debug-Lib;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\soil\Simple OpenGL Image Library\projects\VC8\Debug;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120;C:\Users\jared.ramey\Documents\GitHub\Knight_Framework\Knight_FrameWork_V1\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;glew32.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -83,25 +83,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\glfont_cpp\glfont.cc" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="Knight_Quad.cpp" />
     <ClCompile Include="Knight_Triangle.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TextHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DaFont.fnt" />
     <None Include="DatFont.glf" />
     <None Include="FlatFragmentShader.glsl" />
     <None Include="TexturedFragmentShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\glfont_cpp\glfont.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Knight_Quad.h" />
     <ClInclude Include="Knight_Triangle.h" />
+    <ClInclude Include="TextHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="DaFont_0.png" />
     <Image Include="frame-1.png" />
     <Image Include="frame-2.png" />
     <Image Include="frame-3.png" />
@@ -111,6 +113,12 @@
     <Image Include="frame-7.png" />
     <Image Include="frame-8.png" />
     <Image Include="myTexture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="dream.xml" />
+    <Xml Include="empty.xml" />
+    <Xml Include="utf8test.xml" />
+    <Xml Include="utf8testverify.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
