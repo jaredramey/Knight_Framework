@@ -24,6 +24,9 @@ int main()
 	//class for texture handling
 	TextHandler myText;
 
+	//setting up text
+	myText.SetFont("DaFont.fnt");
+
 	//Place to test classes
 	Knight_Triangle* testTriangle = new Knight_Triangle();
 	Knight_Quad* testQuad = new Knight_Quad();
@@ -98,6 +101,7 @@ int main()
 	{
 		system("CLS");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
 
 		//send orthographic projection info to shader
 		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
@@ -108,6 +112,9 @@ int main()
 		//Main loop code goes here
 		testTriangle->Draw(timer);
 		testQuad->Draw(timer);
+
+		//testing text
+		myText.DrawString("@", 100, 100, 50, 50);
 
 		timer += 3;
 		std::cerr << timer << "\n";
@@ -126,7 +133,6 @@ int main()
 	//Code for deleting any buffers
 	//delete the index buffer to free up allocated memory
 	glLoadIdentity();
-
 	glfwTerminate();
 	return 0;
 }

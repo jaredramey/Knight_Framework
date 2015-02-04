@@ -3,13 +3,15 @@
 #include "Knight_Quad.h"
 #include <string>
 
+using namespace tinyxml2;
+
 struct Char
 {
 	Knight_Quad texture;
 	std::string stringName;
 	float width, heigth;
-	float x0, y0, x1, y1;
-	float offset;
+	float uPos, vPos;
+	float xOffset, yOffset, xAdvance;
 
 };
 
@@ -20,10 +22,13 @@ public:
 	~TextHandler();
 
 	void SetFont(std::string fontName);
-	//Char GetChar(int in_char);
+	Char GetChar(int in_char);
+
+	void DrawString(std::string line, float x, float y, float width, float heigth);
 private:
 	std::string fontName;
 	Knight_Quad fontTexture;
-	//XMLDocument fontInfo;
+	XMLDocument fontInfo;
+	Knight_Quad CreatedText;
 };
 
