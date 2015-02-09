@@ -114,7 +114,7 @@ int main()
 		testQuad->Draw(timer);
 
 		//testing text
-		myText.DrawString("@", 100, 100, 50, 50);
+		myText.DrawString("B", 100, 100, 50, 50);
 
 		timer += 3;
 		std::cerr << timer << "\n";

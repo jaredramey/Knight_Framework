@@ -38,10 +38,10 @@ Char TextHandler::GetChar(int in_char)
 		element = element->NextSiblingElement();
 	}
 	
-	out.width = element->IntAttribute("width") /256;
-	out.heigth = element->IntAttribute("height") /256;
-	out.uPos = element->IntAttribute("x") /256;
-	out.vPos = element->IntAttribute("y") /256;
+	out.width = element->IntAttribute("width") /256.0f;
+	out.heigth = element->IntAttribute("height") /256.0f;
+	out.uPos = element->IntAttribute("x") /256.0f;
+	out.vPos = element->IntAttribute("y") /256.0f;
 	out.xOffset = element->FloatAttribute("xoffset");
 	out.yOffset = element->FloatAttribute("yoffset");
 	out.xAdvance = element->FloatAttribute("xadvance");
@@ -49,7 +49,7 @@ Char TextHandler::GetChar(int in_char)
 	return out;
 }
 
-void TextHandler::DrawString(std::string line, float x, float y, float width, float heigth)
+void TextHandler::DrawString(std::string line, float x, float y, int width, int heigth)
 {
 	//take in the string and break it down to a character array to read it easier
 	const int length = line.length();
@@ -65,12 +65,19 @@ void TextHandler::DrawString(std::string line, float x, float y, float width, fl
 				//change string name of the font texture to a const char* to be able to set it on the quad
 				const char* textureName = "DaFont_0.png";//textToBeCreated[i].stringName.c_str();
 				//set the texture
-				textToBeCreated.texture.SetTexture(0, textureName, 256, 256, 8);
+				textToBeCreated.texture.SetTexture(0, textureName, width, heigth, 4);
 				//set UVs for text quad
-				textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos+textToBeCreated.width), (textToBeCreated.vPos+textToBeCreated.heigth));
-				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos), (textToBeCreated.vPos+textToBeCreated.heigth));
-				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (textToBeCreated.vPos));
-				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos+textToBeCreated.width), (textToBeCreated.vPos));
+				//works but is upside down
+				/*textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos + textToBeCreated.width), (1-(textToBeCreated.vPos + textToBeCreated.heigth)));
+				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos + textToBeCreated.width), (1-(textToBeCreated.vPos)));
+				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (1-(textToBeCreated.vPos)));
+				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos), (1-(textToBeCreated.vPos + textToBeCreated.heigth)));*/
+
+				//trying to get it upside right
+				textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
+				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos)));
+				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos)));
+				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
 
 				//proof of concept UVs
 				/*textToBeCreated.texture.SetUVs(0, 1.0f, 1.0f);
@@ -78,10 +85,10 @@ void TextHandler::DrawString(std::string line, float x, float y, float width, fl
 				textToBeCreated.texture.SetUVs(2, 0.0f, 0.0f);
 				textToBeCreated.texture.SetUVs(3, 0.0f, 1.0f);*/
 				//set the color for the text quad (set the background to black) [Do I need to?]
-				textToBeCreated.texture.SetColor(0, 0.0f, 0.0f, 0.0f, 1.0f);
-				textToBeCreated.texture.SetColor(1, 0.0f, 0.0f, 0.0f, 1.0f);
-				textToBeCreated.texture.SetColor(2, 0.0f, 0.0f, 0.0f, 1.0f);
-				textToBeCreated.texture.SetColor(3, 0.0f, 0.0f, 0.0f, 1.0f);
+				textToBeCreated.texture.SetColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+				textToBeCreated.texture.SetColor(1, 1.0f, 1.0f, 1.0f, 1.0f);
+				textToBeCreated.texture.SetColor(2, 1.0f, 1.0f, 1.0f, 1.0f);
+				textToBeCreated.texture.SetColor(3, 1.0f, 1.0f, 1.0f, 1.0f);
 				//set position on screen
 				textToBeCreated.texture.SetPosition(0, (x + width), (y + heigth));
 				textToBeCreated.texture.SetPosition(1, (x + width), (y - heigth));

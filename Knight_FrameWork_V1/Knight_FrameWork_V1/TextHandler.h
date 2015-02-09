@@ -24,7 +24,7 @@ public:
 	void SetFont(std::string fontName);
 	Char GetChar(int in_char);
 
-	void DrawString(std::string line, float x, float y, float width, float heigth);
+	void DrawString(std::string line, float x, float y, int width, int heigth);
 private:
 	std::string fontName;
 	Knight_Quad fontTexture;
