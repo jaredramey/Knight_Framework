@@ -25,7 +25,7 @@ int main()
 	TextHandler myText;
 
 	//setting up text
-	myText.SetFont("DaFont.fnt");
+	myText.SetFont("DaFontV2.fnt");
 
 	//Place to test classes
 	Knight_Triangle* testTriangle = new Knight_Triangle();
@@ -83,8 +83,6 @@ int main()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//temporary place to create the buffers
-	//create ID for a vertex buffer object
 	//create shader program
 	GLuint uiProgramFlat = init.CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
 	GLuint uiProgramTextured = init.CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
@@ -101,7 +99,7 @@ int main()
 	{
 		system("CLS");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 		//send orthographic projection info to shader
 		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
@@ -114,7 +112,7 @@ int main()
 		testQuad->Draw(timer);
 
 		//testing text
-		myText.DrawString("B", 100, 100, 50, 50);
+		myText.DrawString(" I am me", 100, 600, 25, 25);
 
 		timer += 3;
 		std::cerr << timer << "\n";

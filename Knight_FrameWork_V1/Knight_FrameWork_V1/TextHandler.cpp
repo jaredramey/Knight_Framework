@@ -67,33 +67,33 @@ void TextHandler::DrawString(std::string line, float x, float y, int width, int 
 				//set the texture
 				textToBeCreated.texture.SetTexture(0, textureName, width, heigth, 4);
 				//set UVs for text quad
-				//works but is upside down
-				/*textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos + textToBeCreated.width), (1-(textToBeCreated.vPos + textToBeCreated.heigth)));
-				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos + textToBeCreated.width), (1-(textToBeCreated.vPos)));
-				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (1-(textToBeCreated.vPos)));
-				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos), (1-(textToBeCreated.vPos + textToBeCreated.heigth)));*/
+				//Text is upside right! Woot!
+				textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos)));
+				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
+				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
+				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos)));
 
-				//trying to get it upside right
-				textToBeCreated.texture.SetUVs(0, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
-				textToBeCreated.texture.SetUVs(1, (textToBeCreated.uPos + textToBeCreated.width), (1 - (textToBeCreated.vPos)));
-				textToBeCreated.texture.SetUVs(2, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos)));
-				textToBeCreated.texture.SetUVs(3, (textToBeCreated.uPos), (1 - (textToBeCreated.vPos + textToBeCreated.heigth)));
-
-				//proof of concept UVs
-				/*textToBeCreated.texture.SetUVs(0, 1.0f, 1.0f);
-				textToBeCreated.texture.SetUVs(1, 1.0f, 0.0f);
-				textToBeCreated.texture.SetUVs(2, 0.0f, 0.0f);
-				textToBeCreated.texture.SetUVs(3, 0.0f, 1.0f);*/
-				//set the color for the text quad (set the background to black) [Do I need to?]
+				//set text color (white)
 				textToBeCreated.texture.SetColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
 				textToBeCreated.texture.SetColor(1, 1.0f, 1.0f, 1.0f, 1.0f);
 				textToBeCreated.texture.SetColor(2, 1.0f, 1.0f, 1.0f, 1.0f);
 				textToBeCreated.texture.SetColor(3, 1.0f, 1.0f, 1.0f, 1.0f);
+
 				//set position on screen
-				textToBeCreated.texture.SetPosition(0, (x + width), (y + heigth));
-				textToBeCreated.texture.SetPosition(1, (x + width), (y - heigth));
-				textToBeCreated.texture.SetPosition(2, (x - width), (y - heigth));
-				textToBeCreated.texture.SetPosition(3, (x - width), (y + heigth));
+				if (i == 0)
+				{
+					textToBeCreated.texture.SetPosition(0, (x + width), (y + heigth));
+					textToBeCreated.texture.SetPosition(1, (x + width), (y - heigth));
+					textToBeCreated.texture.SetPosition(2, (x - width), (y - heigth));
+					textToBeCreated.texture.SetPosition(3, (x - width), (y + heigth));
+				}
+				else
+				{
+					textToBeCreated.texture.SetPosition(0, (((x / 2)*i) + width), (y + heigth));
+					textToBeCreated.texture.SetPosition(1, (((x / 2)*i) + width), (y - heigth));
+					textToBeCreated.texture.SetPosition(2, (((x / 2)*i) - width), (y - heigth));
+					textToBeCreated.texture.SetPosition(3, (((x / 2)*i) - width), (y + heigth));
+				}
 
 				textToBeCreated.texture.Draw(textTimer);
 		}

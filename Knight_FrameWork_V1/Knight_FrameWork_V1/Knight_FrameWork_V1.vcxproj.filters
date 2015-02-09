@@ -47,6 +47,9 @@
     <None Include="DaFont.fnt">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="DaFontV2.fnt">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Knight_Triangle.h">
@@ -91,6 +94,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="DaFont_0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DaFontV2_0.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
