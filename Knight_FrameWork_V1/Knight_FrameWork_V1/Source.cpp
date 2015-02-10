@@ -14,7 +14,6 @@
 #include "Knight_Triangle.h"
 #include "TextHandler.h"
 
-
 int main()
 {
 	//initialize glew and such
@@ -28,17 +27,33 @@ int main()
 	myText.SetFont("DaFontV2.fnt");
 
 	//Place to test classes
-	Knight_Triangle* testTriangle = new Knight_Triangle();
+	Knight_Quad* testTriangle = new Knight_Quad();
 	Knight_Quad* testQuad = new Knight_Quad();
+	Knight_Quad* Egg = new Knight_Quad();
+
+	//Variables for Egg (Ball)
+	float bX = 512.0f, bY = 360;
+	float bWidth = 50.0f, bHeigth = 75.0f;
+	float bColor[4] = {1.0f, 1.0f, 1.0f, 1.0};
+	//Creating the egg
+	Egg->CreateQuad(bX, bY, bWidth, bHeigth, bColor, eLEFT);
+	//Setting textures
+	float etWidth = 128.0f, etHeigth = 128.0f, etBPP = 4;
+	Egg->SetTexture(0, "egg1.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(1, "egg2.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(2, "egg3.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(3, "egg4.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(4, "egg5.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(5, "egg6.png", etWidth, etHeigth, etBPP);
+	Egg->SetTexture(6, "egg7.png", etWidth, etHeigth, etBPP);
+
 
 	//variables for testTriangle
-	float tX = 0, tY = 300;
-	float tWidth = 100, tHeight = 100;
+	float tX = 1000, tY = 300;
+	float tWidth = 75, tHeight = 100;
 	float tColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-
 	//Setting up the player to test the triangle
-	testTriangle->CreateTriangle(tX, tY, tWidth, tHeight, tColor);
+	testTriangle->CreateQuad(tX, tY, tWidth, tHeight, tColor, eLEFT);
 
 	int width = 50, heigth = 50, bpp = 4;
 	testTriangle->SetTexture(0, "frame-1.png", width, heigth, bpp);
@@ -53,11 +68,11 @@ int main()
 
 	//setting up test Quad
 	//variables for testQuad
-	float qX = 0, qY = 300;
-	float qWidth = 100, qHeight = 100;
+	float qX = 100, qY = 300;
+	float qWidth = 75, qHeight = 100;
 	float qColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	testQuad->CreateQuad(qX, qY, qWidth, qHeight, qColor);
+	testQuad->CreateQuad(qX, qY, qWidth, qHeight, qColor, eRIGHT);
 
 	int widthS = 50, heigthS = 50, bppS = 4;
 	testQuad->SetTexture(0, "frame-1.png", widthS, heigthS, bppS);
@@ -83,6 +98,7 @@ int main()
 	float *orthographicProjection = init.getOrtho(0, 1080, 0, 720, 0, 180);
 
 	float timer = 0;
+	float ballTimer = 0;
 
 	while (!glfwWindowShouldClose(init.window))
 	{
@@ -96,20 +112,29 @@ int main()
 		//glUseProgram(uiProgramFlat);
 		glUseProgram(uiProgramTextured);
 
-		//Main loop code goes here
-		testTriangle->Update(0x57, 0x53, 0x41, 0x44, 50.0f);
-		testTriangle->Draw(timer);
-		testQuad->Update(VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, 50.0f);
-		testQuad->Draw(timer);
-
 		//testing text
-		myText.DrawString(" i am me", 100, 600, 25, 25);
+		myText.DrawString("Bird Pong", 400.0f, 650.0f, 20.0f, 30.0f);
+		Egg->Draw(ballTimer);
 
-		timer += 3;
+		//Main loop code goes here
+		testTriangle->Update(VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, 50.0f);
+		testQuad->Update(0x57, 0x53, 0x41, 0x44, 50.0f);
+		Egg->Move(eRIGHT, 30.0f);
+		testQuad->Draw(timer);
+		testTriangle->Draw(timer);
+
+		timer += 6;
 		std::cerr << timer << "\n";
 		if (timer >= 30)
 		{
 			timer = 0;
+		}
+
+		ballTimer += 6;
+		std::cerr << timer << "\n";
+		if (ballTimer >= 26)
+		{
+			ballTimer = 0;
 		}
 
 		//swap front and back buffers

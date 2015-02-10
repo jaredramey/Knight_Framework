@@ -77,21 +77,23 @@ void Knight_Quad::SetTexture(int frame, const char* textureName, int width, int 
 
 void Knight_Quad::Update(int cU, int cD, int cL, int cR, float speed)
 {
-		if (GetAsyncKeyState(cU))
+		if (GetAsyncKeyState(cU) && y < 720)
 		{
 			points[0].fPositions[1] += speed;
 			points[1].fPositions[1] += speed;
 			points[2].fPositions[1] += speed;
 			points[3].fPositions[1] += speed;
+			y += speed;
 			isMoving = true;
 		}
 
-		if (GetAsyncKeyState(cD))
+		if (GetAsyncKeyState(cD) && y > 0)
 		{
 			points[0].fPositions[1] -= speed;
 			points[1].fPositions[1] -= speed;
 			points[2].fPositions[1] -= speed;
 			points[3].fPositions[1] -= speed;
+			y -= speed;
 			isMoving = true;
 		}
 
@@ -101,6 +103,7 @@ void Knight_Quad::Update(int cU, int cD, int cL, int cR, float speed)
 			points[1].fPositions[0] -= speed;
 			points[2].fPositions[0] -= speed;
 			points[3].fPositions[0] -= speed;
+			x -= speed;
 			isMoving = true;
 		}
 
@@ -110,6 +113,7 @@ void Knight_Quad::Update(int cU, int cD, int cL, int cR, float speed)
 			points[1].fPositions[0] += speed;
 			points[2].fPositions[0] += speed;
 			points[3].fPositions[0] += speed;
+			x += speed;
 			isMoving = true;
 		}
 	if (isMoving == true)
@@ -271,8 +275,13 @@ void Knight_Quad::Draw(float timer)
 	glDeleteBuffers(1, &uiIBO);
 }
 
-void Knight_Quad::CreateQuad(float x, float y, float width, float heigth, float color[4])
+void Knight_Quad::CreateQuad(float x, float y, float width, float heigth, float color[4], Direction myDirection)
 {
+	this->x = x;
+	this->y = y;
+	this->width = width;
+	this->heigth = heigth;
+
 	SetPosition(0, (x - width), (y + (heigth)));
 	SetPosition(1, (x - (width)), (y - (heigth)));
 	SetPosition(2, (x + (width)), (y - (heigth)));
@@ -282,9 +291,84 @@ void Knight_Quad::CreateQuad(float x, float y, float width, float heigth, float 
 	SetColor(1, color[0], color[1], color[2], color[3]);
 	SetColor(2, color[0], color[1], color[2], color[3]);
 	SetColor(3, color[0], color[1], color[2], color[3]);
+	if (myDirection == eRIGHT)
+	{
+		SetUVs(0, 0.0f, 1.0f);
+		SetUVs(1, 0.0f, 0.0f);
+		SetUVs(2, 1.0f, 0.0f);
+		SetUVs(3, 1.0f, 1.0f);
+	}
+	else if (myDirection == eLEFT)
+	{
+		SetUVs(0, 1.0f, 1.0f);
+		SetUVs(1, 1.0f, 0.0f);
+		SetUVs(2, 0.0f, 0.0f);
+		SetUVs(3, 0.0f, 1.0f);
+	}
+}
 
-	SetUVs(0, 0.0f, 1.0f);
-	SetUVs(1, 0.0f, 0.0f);
-	SetUVs(2, 1.0f, 0.0f);
-	SetUVs(3, 1.0f, 1.0f);
+void Knight_Quad::WindowCollision()
+{
+	if (y > (720 - heigth) && y > (0 + heigth))
+	{
+		points[0].fPositions[1] -= 200.0f;
+		points[1].fPositions[1] -= 200.0f;
+		points[2].fPositions[1] -= 200.0f;
+		points[3].fPositions[1] -= 200.0f;
+		y -= 100.0f;
+	}
+
+	else if (y < (720 - heigth) && y < (0 + heigth))
+	{
+		points[0].fPositions[1] += 200.0f;
+		points[1].fPositions[1] += 200.0f;
+		points[2].fPositions[1] += 200.0f;
+		points[3].fPositions[1] += 200.0f;
+		y -= 100.0f;
+	}
+}
+
+bool Knight_Quad::Collision(Knight_Quad *otherQuad)
+{
+	int radius1 = this->width;
+	int radius2 = otherQuad->width;
+	int dx = otherQuad->x - this->x;
+	int dy = otherQuad->y - this->y;
+	int radii = radius1 + radius2;
+	if ((dx * dx) + (dy * dy) < radii * radii)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+void Knight_Quad::Move(Direction direction, float speed)
+{
+	if (direction == eRIGHT)
+	{
+		points[0].fPositions[0] += speed;
+		points[1].fPositions[0] += speed;
+		points[2].fPositions[0] += speed;
+		points[3].fPositions[0] += speed;
+		x += speed;
+		if (x < 1024)
+		{
+			aDirection = eLEFT;
+		}
+	}
+
+	if (direction == eLEFT)
+	{
+		points[0].fPositions[0] -= speed;
+		points[1].fPositions[0] -= speed;
+		points[2].fPositions[0] -= speed;
+		points[3].fPositions[0] -= speed;
+		x -= speed;
+		if (x < 0)
+		{
+			aDirection = eRIGHT;
+		}
+	}
 }

@@ -89,10 +89,12 @@ void TextHandler::DrawString(std::string line, float x, float y, int width, int 
 				}
 				else
 				{
-					textToBeCreated.texture.SetPosition(0, (((x / 2)*i) + width), (y + heigth));
-					textToBeCreated.texture.SetPosition(1, (((x / 2)*i) + width), (y - heigth));
-					textToBeCreated.texture.SetPosition(2, (((x / 2)*i) - width), (y - heigth));
-					textToBeCreated.texture.SetPosition(3, (((x / 2)*i) - width), (y + heigth));
+					//(x+(width*i) + width)
+					//(((x/2) * i)/8 + width)
+					textToBeCreated.texture.SetPosition(0, (x + ((width*i) * 2) + width), (y + heigth));
+					textToBeCreated.texture.SetPosition(1, (x + ((width*i) * 2) + width), (y - heigth));
+					textToBeCreated.texture.SetPosition(2, (x + ((width*i) * 2) - width), (y - heigth));
+					textToBeCreated.texture.SetPosition(3, (x + ((width*i) * 2) - width), (y + heigth));
 				}
 
 				textToBeCreated.texture.Draw(textTimer);

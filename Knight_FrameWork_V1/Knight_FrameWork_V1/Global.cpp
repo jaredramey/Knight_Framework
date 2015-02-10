@@ -19,7 +19,7 @@ int Global::Initialize()
 	}
 
 	//create a windowed mode window and it's OpenGL context
-	window = glfwCreateWindow(1024, 720, "Knight_FrameWork_v1", NULL, NULL);
+	window = glfwCreateWindow(wWidth, wHeight, "Knight_FrameWork_v1", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();

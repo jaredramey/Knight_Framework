@@ -99,6 +99,27 @@
     <Image Include="DaFontV2_0.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="egg1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="egg7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="utf8test.xml">

@@ -18,6 +18,13 @@ struct PointQuad
 	float fUVs[2];
 };
 
+enum Direction
+{
+	eLEFT,
+	eRIGHT
+
+};
+
 class Knight_Quad
 {
 private:
@@ -30,6 +37,9 @@ public:
 	GLuint uiVBO;
 	GLuint uiIBO;
 	PointQuad points[4];
+	Direction aDirection;
+	float x, y;
+	float width, heigth;
 
 	//Default Constructors
 	Knight_Quad();
@@ -46,6 +56,9 @@ public:
 	void Update(int cU, int cD, int cL, int cR, float speed);
 	//set timer to zero by default. Goes up to 39 (0-39) so reset your clock after that
 	void Draw(float timer);
-	void CreateQuad(float x, float y, float width, float heigth, float color[4]);
+	void CreateQuad(float x, float y, float width, float heigth, float color[4], Direction myDirection);
+	void WindowCollision();
+	bool Collision(Knight_Quad *otherQuad);
+	void Move(Direction direction, float speed);
 };
 

@@ -106,6 +106,13 @@
   <ItemGroup>
     <Image Include="DaFontV2_0.png" />
     <Image Include="DaFont_0.png" />
+    <Image Include="egg1.png" />
+    <Image Include="egg2.png" />
+    <Image Include="egg3.png" />
+    <Image Include="egg4.png" />
+    <Image Include="egg5.png" />
+    <Image Include="egg6.png" />
+    <Image Include="egg7.png" />
     <Image Include="frame-1.png" />
     <Image Include="frame-2.png" />
     <Image Include="frame-3.png" />

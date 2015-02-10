@@ -22,6 +22,8 @@ public:
 	Global();
 	~Global();
 
+	int wWidth = 1024, wHeight = 720;
+
 	int Initialize();
 
 	GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
