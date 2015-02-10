@@ -31,17 +31,14 @@ int main()
 	Knight_Triangle* testTriangle = new Knight_Triangle();
 	Knight_Quad* testQuad = new Knight_Quad();
 
+	//variables for testTriangle
+	float tX = 0, tY = 300;
+	float tWidth = 100, tHeight = 100;
+	float tColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 
 	//Setting up the player to test the triangle
-	testTriangle->SetPosition(0, (1024 / 2.0), (720 / 2.0 + 100));
-	testTriangle->SetPosition(1, (1024 / 2.0 - 100.0f), (720 / 2.0 - 100.0f));
-	testTriangle->SetPosition(2,(1024 / 2.0 + 100.0f), (720 / 2.0 - 100.0f));
-
-	testTriangle->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-	testTriangle->SetUVs(0, 0.0f, 1.0f);
-	testTriangle->SetUVs(1, 0.0f, 0.0f);
-	testTriangle->SetUVs(2, 1.0f, 0.0f);
+	testTriangle->CreateTriangle(tX, tY, tWidth, tHeight, tColor);
 
 	int width = 50, heigth = 50, bpp = 4;
 	testTriangle->SetTexture(0, "frame-1.png", width, heigth, bpp);
@@ -55,20 +52,12 @@ int main()
 
 
 	//setting up test Quad
-	testQuad->SetPosition(0, (500.0f), (400.0f));
-	testQuad->SetPosition(1, (500.0f), (300.0f));
-	testQuad->SetPosition(2, (400.0f), (300.0f));
-	testQuad->SetPosition(3, (400.0f), (400.0f));
+	//variables for testQuad
+	float qX = 0, qY = 300;
+	float qWidth = 100, qHeight = 100;
+	float qColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	testQuad->SetColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
-	testQuad->SetColor(1, 1.0f, 1.0f, 1.0f, 1.0f);
-	testQuad->SetColor(2, 1.0f, 1.0f, 1.0f, 1.0f);
-	testQuad->SetColor(3, 1.0f, 1.0f, 1.0f, 1.0f);
-
-	testQuad->SetUVs(0, 0.0f, 1.0f);
-	testQuad->SetUVs(1, 0.0f, 0.0f);
-	testQuad->SetUVs(2, 1.0f, 0.0f);
-	testQuad->SetUVs(3, 1.0f, 1.0f);
+	testQuad->CreateQuad(qX, qY, qWidth, qHeight, qColor);
 
 	int widthS = 50, heigthS = 50, bppS = 4;
 	testQuad->SetTexture(0, "frame-1.png", widthS, heigthS, bppS);
@@ -108,11 +97,13 @@ int main()
 		glUseProgram(uiProgramTextured);
 
 		//Main loop code goes here
+		testTriangle->Update(0x57, 0x53, 0x41, 0x44, 50.0f);
 		testTriangle->Draw(timer);
+		testQuad->Update(VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, 50.0f);
 		testQuad->Draw(timer);
 
 		//testing text
-		myText.DrawString(" I am me", 100, 600, 25, 25);
+		myText.DrawString(" i am me", 100, 600, 25, 25);
 
 		timer += 3;
 		std::cerr << timer << "\n";
@@ -120,7 +111,6 @@ int main()
 		{
 			timer = 0;
 		}
-
 
 		//swap front and back buffers
 		glfwSwapBuffers(init.window);

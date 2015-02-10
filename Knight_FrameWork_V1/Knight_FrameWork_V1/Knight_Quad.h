@@ -43,8 +43,9 @@ public:
 	//can set up to 10 frames (0-9)
 	void SetTexture(int frame, const char* textureName, int width, int height, int bpp);
 
-	void Update();
+	void Update(int cU, int cD, int cL, int cR, float speed);
 	//set timer to zero by default. Goes up to 39 (0-39) so reset your clock after that
 	void Draw(float timer);
+	void CreateQuad(float x, float y, float width, float heigth, float color[4]);
 };
 

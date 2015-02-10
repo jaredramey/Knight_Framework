@@ -75,35 +75,47 @@ void Knight_Quad::SetTexture(int frame, const char* textureName, int width, int 
 	TextureFrames[frame] = loadTexture(textureName, width, height, bpp);
 }
 
-void Knight_Quad::Update()
+void Knight_Quad::Update(int cU, int cD, int cL, int cR, float speed)
 {
-	/*if (GetAsyncKeyState(0x57))
-	{
-	fPositions[1] += 10.0f;
-	isMoving = true;
-	}
+		if (GetAsyncKeyState(cU))
+		{
+			points[0].fPositions[1] += speed;
+			points[1].fPositions[1] += speed;
+			points[2].fPositions[1] += speed;
+			points[3].fPositions[1] += speed;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x53))
-	{
-	fPositions[1] -= 10.0f;
-	isMoving = true;
-	}
+		if (GetAsyncKeyState(cD))
+		{
+			points[0].fPositions[1] -= speed;
+			points[1].fPositions[1] -= speed;
+			points[2].fPositions[1] -= speed;
+			points[3].fPositions[1] -= speed;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x41))
-	{
-	fPositions[0] -= 10.0f;
-	isMoving = true;
-	}
+		if (GetAsyncKeyState(cL))
+		{
+			points[0].fPositions[0] -= speed;
+			points[1].fPositions[0] -= speed;
+			points[2].fPositions[0] -= speed;
+			points[3].fPositions[0] -= speed;
+			isMoving = true;
+		}
 
-	if (GetAsyncKeyState(0x44))
+		if (GetAsyncKeyState(cR))
+		{
+			points[0].fPositions[0] += speed;
+			points[1].fPositions[0] += speed;
+			points[2].fPositions[0] += speed;
+			points[3].fPositions[0] += speed;
+			isMoving = true;
+		}
+	if (isMoving == true)
 	{
-	fPositions[0] += 10.0f;
-	isMoving = true;
+		isMoving = false;
 	}
-	else
-	{
-	isMoving = false;
-	}*/
 }
 
 void Knight_Quad::Draw(float timer)
@@ -257,4 +269,22 @@ void Knight_Quad::Draw(float timer)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDeleteBuffers(1, &uiIBO);
+}
+
+void Knight_Quad::CreateQuad(float x, float y, float width, float heigth, float color[4])
+{
+	SetPosition(0, (x - width), (y + (heigth)));
+	SetPosition(1, (x - (width)), (y - (heigth)));
+	SetPosition(2, (x + (width)), (y - (heigth)));
+	SetPosition(3, (x + width), (y + heigth));
+
+	SetColor(0, color[0], color[1], color[2], color[3]);
+	SetColor(1, color[0], color[1], color[2], color[3]);
+	SetColor(2, color[0], color[1], color[2], color[3]);
+	SetColor(3, color[0], color[1], color[2], color[3]);
+
+	SetUVs(0, 0.0f, 1.0f);
+	SetUVs(1, 0.0f, 0.0f);
+	SetUVs(2, 1.0f, 0.0f);
+	SetUVs(3, 1.0f, 1.0f);
 }

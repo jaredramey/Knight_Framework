@@ -83,37 +83,46 @@ void Knight_Triangle::SetTexture(int frame, const char* textureName, int width, 
 	
 }
 
-void Knight_Triangle::Update()
+void Knight_Triangle::Update(int cU, int cD, int cL, int cR, float speed)
 {
-	for (int i = 0; i < 3; i++)
+	if (GetAsyncKeyState(cU))
 	{
-		if (GetAsyncKeyState(0x57))
-		{
-			points[i].fPositions[1] += 10.0f;
-			isMoving = true;
-		}
+		points[0].fPositions[1] += speed;
+		points[1].fPositions[1] += speed;
+		points[2].fPositions[1] += speed;
+		points[3].fPositions[1] += speed;
+		isMoving = true;
+	}
 
-		if (GetAsyncKeyState(0x53))
-		{
-			points[i].fPositions[1] -= 10.0f;
-			isMoving = true;
-		}
+	if (GetAsyncKeyState(cD))
+	{
+		points[0].fPositions[1] -= speed;
+		points[1].fPositions[1] -= speed;
+		points[2].fPositions[1] -= speed;
+		points[3].fPositions[1] -= speed;
+		isMoving = true;
+	}
 
-		if (GetAsyncKeyState(0x41))
-		{
-			points[i].fPositions[1] -= 10.0f;
-			isMoving = true;
-		}
+	if (GetAsyncKeyState(cL))
+	{
+		points[0].fPositions[0] -= speed;
+		points[1].fPositions[0] -= speed;
+		points[2].fPositions[0] -= speed;
+		points[3].fPositions[0] -= speed;
+		isMoving = true;
+	}
 
-		if (GetAsyncKeyState(0x44))
-		{
-			points[i].fPositions[1] += 10.0f;
-			isMoving = true;
-		}
-		else
-		{
-			isMoving = false;
-		}
+	if (GetAsyncKeyState(cR))
+	{
+		points[0].fPositions[0] += speed;
+		points[1].fPositions[0] += speed;
+		points[2].fPositions[0] += speed;
+		points[3].fPositions[0] += speed;
+		isMoving = true;
+	}
+	if (isMoving == true)
+	{
+		isMoving = false;
 	}
 }
 
@@ -138,7 +147,7 @@ void Knight_Triangle::Draw(float timer)
 			glUnmapBuffer(GL_ARRAY_BUFFER);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
-	
+
 		isMoving = true;
 	}
 
@@ -169,7 +178,7 @@ void Knight_Triangle::Draw(float timer)
 	{
 		if (TextureFrames[0] != NULL)
 		{
-			glBindTexture(GL_TEXTURE_2D ,TextureFrames[0]);
+			glBindTexture(GL_TEXTURE_2D, TextureFrames[0]);
 		}
 
 		else
@@ -270,4 +279,18 @@ void Knight_Triangle::Draw(float timer)
 
 	glDeleteBuffers(1, &uiIBO);
 	//glUseProgram(0);
+}
+
+//point starts from center
+void Knight_Triangle::CreateTriangle(float x, float y, float width, float heigth, float color[4])
+{
+	SetPosition(0, (x), (y+(heigth/2)));
+	SetPosition(1, (x-(width)), (y-(heigth)));
+	SetPosition(2, (x+(width)), (y-(heigth)));
+
+	SetColor(color[0], color[1], color[2], color[3]);
+
+	SetUVs(0, 0.0f, 1.0f);
+	SetUVs(1, 0.0f, 0.0f);
+	SetUVs(2, 1.0f, 0.0f);
 }
